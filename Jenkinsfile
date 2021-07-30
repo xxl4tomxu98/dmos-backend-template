@@ -79,10 +79,9 @@ pipeline {
            }    
         }
         stage('Scan') {
-            when { branch 'main' }
             steps {
-                container('sonarqube') {
-                    sh 'sonar-scanner -Dsonar.login=${SONAR_LOGIN}'
+                container('maven') {
+                    sh 'mvn -B -s `pwd`/settings.xml sonar:sonar -Dsonar.login=${SONAR_LOGIN}'
                 }
            }    
         }
