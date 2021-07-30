@@ -53,6 +53,9 @@ spec:
     - name: gitversion
       image: docker.ftc-llc.net/gitversion:5.6.11
       imagePullPolicy: Always
+      volumeMounts:
+        - mountPath: /gitversion
+          name: gitversion
       command:
         - sleep
       args:
@@ -64,6 +67,8 @@ spec:
         - infinity
       imagePullPolicy: IfNotPresent
       volumeMounts:
+        - mountPath: /gitversion
+          name: gitversion
         - mountPath: /env-test
           name: env-test
         - mountPath: /env-prod
@@ -81,6 +86,8 @@ spec:
         items:
           - key: .dockerconfigjson
             path: config.json
+    - name: gitversion
+      emptyDir: {}
     - name: env-test
       emptyDir: {}
     - name: env-prod

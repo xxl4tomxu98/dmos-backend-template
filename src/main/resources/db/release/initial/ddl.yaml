@@ -1,0 +1,47 @@
+databaseChangeLog:
+- changeSet:
+    id: 20210729-1400
+    author: mtilden
+    preConditions:
+      onFail: MARK_RAN
+      not:
+        tableExists:
+          tableName: audit_log_type_lookup
+    changes:
+      - createTable:
+          columns:
+            - column:
+                constraints:
+                  primaryKey: true
+                  primaryKeyName: pk_audit_log_type_lookup
+                name: log_type_id
+                remarks: Audit log type id
+                type: INTEGER
+            - column:
+                constraints:
+                  nullable: false
+                name: log_type
+                remarks: Audit log type
+                type: VARCHAR(100)
+            - column:
+                constraints:
+                  nullable: false
+                name: display_nm
+                remarks: Display Name
+                type: VARCHAR(50)
+            - column:
+                constraints:
+                  nullable: false
+                name: description
+                remarks: Description
+                type: VARCHAR(500)
+          remarks: Table for Audit Log Type lookup
+          tableName: audit_log_type_lookup
+      - addUniqueConstraint:
+          columnNames: display_nm
+          constraintName: uk_audit_log_type_lookup_dn
+          tableName: audit_log_type_lookup
+      - addUniqueConstraint:
+          columnNames: log_type
+          constraintName: uk_audit_log_type_lookup_lt
+          tableName: audit_log_type_lookup

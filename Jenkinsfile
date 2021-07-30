@@ -9,7 +9,8 @@ pipeline {
         stage('Build') {
             steps {
                 container('maven') {
-                    sh 'mvn -B package'
+                    sh 'echo Job Name: $JOB_NAME'
+                    sh 'mvn -B install'
                 }
             }   
         }
@@ -55,7 +56,7 @@ pipeline {
                 container('kaniko') {
                     sh '''
                         source `pwd`/gitversion
-                        /kaniko/executor -f `pwd`/docker/ui/Dockerfile -c `pwd` --insecure --skip-tls-verify --cache=true --destination=docker.ftc-llc.net/dmos/ui-template:${FULL_SEM_VER}
+                        /kaniko/executor -f `pwd`/docker/backend/Dockerfile -c `pwd` --insecure --skip-tls-verify --cache=true --destination=docker.ftc-llc.net/dmos/backend-template:${FULL_SEM_VER}
                     '''
                 }
            }    
@@ -69,9 +70,9 @@ pipeline {
                         cd /env-test
                         git clone https://github.com/FTCLLC/pipeline-env-test.git .
                         cd bases
-                        kustomize edit set image docker.ftc-llc.net/dmos/ui-template=docker.ftc-llc.net/dmos/ui-template:${FULL_SEM_VER}
+                        kustomize edit set image docker.ftc-llc.net/dmos/backend-template=docker.ftc-llc.net/dmos/backend-template:${FULL_SEM_VER}
                         git add kustomization.yaml
-                        git commit -m "bump: update ui-template to ${FULL_SEM_VER}"
+                        git commit -m "bump: update backend-template to ${FULL_SEM_VER}"
                         git push
                     '''
                 }
@@ -117,14 +118,13 @@ pipeline {
                         cd /env-prod
                         git clone https://github.com/FTCLLC/pipeline-env-prod.git .
                         cd bases
-                        kustomize edit set image docker.ftc-llc.net/dmos/ui-template=docker.ftc-llc.net/dmos/ui-template:${FULL_SEM_VER}
+                        kustomize edit set image docker.ftc-llc.net/dmos/backend-template=docker.ftc-llc.net/dmos/backend-template:${FULL_SEM_VER}
                         git add kustomization.yaml
-                        git commit -m "bump: update ui-template to ${FULL_SEM_VER}"
+                        git commit -m "bump: update backend-template to ${FULL_SEM_VER}"
                         git push
                     '''
                 }
            }    
         }
-
     }
 }
