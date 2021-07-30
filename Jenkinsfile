@@ -101,7 +101,7 @@ pipeline {
         stage('Functionl Tests') {
             when { branch 'main' }
             steps {
-                container('node') {
+                container('maven') {
                     sh '''#!/bin/bash
                         echo "Put functional tests here!"
                     '''
