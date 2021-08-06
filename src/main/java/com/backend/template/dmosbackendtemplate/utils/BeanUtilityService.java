@@ -1,4 +1,4 @@
-package com.dmos.backend.utils;
+package com.backend.template.dmosbackendtemplate.utils;
 
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
