@@ -23,24 +23,26 @@ public class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         super.configure(http);
         http.authorizeRequests()
-                //.antMatchers("/*")
-                //.hasRole("user")
+                //.mvcMatchers(HttpMethod.GET, "/heroes").permitAll()
                 .anyRequest().permitAll();
         http.csrf().disable();
     }
 
     @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth)     throws Exception {
+    public void configureGlobal(AuthenticationManagerBuilder auth)
+    {
         KeycloakAuthenticationProvider keycloakAuthenticationProvider = keycloakAuthenticationProvider();
         keycloakAuthenticationProvider.setGrantedAuthoritiesMapper(new SimpleAuthorityMapper());
         auth.authenticationProvider(keycloakAuthenticationProvider);
     }
+
     @Bean
     @Override
-    protected SessionAuthenticationStrategy
-    sessionAuthenticationStrategy() {
+    protected SessionAuthenticationStrategy sessionAuthenticationStrategy()
+    {
         return new NullAuthenticatedSessionStrategy();
     }
+
     @Bean
     public KeycloakConfigResolver KeycloakConfigResolver() {
         return new KeycloakSpringBootConfigResolver();

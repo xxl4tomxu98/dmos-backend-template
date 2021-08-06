@@ -5,7 +5,6 @@ import com.backend.template.dmosbackendtemplate.dto.HeroDTO;
 import com.backend.template.dmosbackendtemplate.repository.HeroRepository;
 import liquibase.util.StringUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.exception.DataException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
