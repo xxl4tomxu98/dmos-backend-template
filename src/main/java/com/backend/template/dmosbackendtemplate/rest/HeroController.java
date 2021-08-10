@@ -26,7 +26,7 @@ public class HeroController
     }
 
     @GetMapping("/{heroId}")
-    @RolesAllowed("dmos_write")
+    @RolesAllowed("dmos_read")
     public HeroDTO getHero(@PathVariable("heroId") Long heroId)
     {
         return heroService.getHero(heroId, null);

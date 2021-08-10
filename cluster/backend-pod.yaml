@@ -1,0 +1,41 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    # Used as selector for service
+    app: backend-dev
+    # Turn OFF Istio proxy
+    # sidecar.istio.io/inject: "false"
+  name: backend-dev
+spec:
+  restartPolicy: Always
+  imagePullSecrets:
+    - name: regcred
+  containers:
+    - name: maven
+      image: docker.ftc-llc.net/maven-dev:3.8.1
+      imagePullPolicy: IfNotPresent
+      ports:
+        - containerPort: 8080
+      env:
+      # Default profile for container
+      - name: spring_profiles_active
+        value: test
+      volumeMounts:
+        - mountPath: /home/maven/repo
+          name: workspace
+        - mountPath: /home/maven/.gitconfig
+          name: github
+          subPath: .gitconfig
+        - mountPath: /home/maven/.git-credentials
+          name: github
+          subPath: .git-credentials
+      command:
+        - sleep
+        - infinity
+  volumes:
+    - name: workspace
+      emptyDir: {}
+    - name: github
+      secret:
+        secretName: github
