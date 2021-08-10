@@ -5,10 +5,10 @@ import com.backend.template.dmosbackendtemplate.dto.HeroDTO;
 import com.backend.template.dmosbackendtemplate.repository.HeroRepository;
 import liquibase.util.StringUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
+import javax.inject.Inject;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 @Slf4j
 public class HeroService
 {
-    @Autowired
+    @Inject
     private HeroRepository heroRepository;
 
 

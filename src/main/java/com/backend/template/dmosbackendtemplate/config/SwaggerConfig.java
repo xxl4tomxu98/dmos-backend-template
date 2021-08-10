@@ -38,7 +38,7 @@ public class SwaggerConfig {
     public Docket apiDocumentation() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
-                .apis(RequestHandlerSelectors.any())
+                .apis(RequestHandlerSelectors.basePackage("com.backend.template.dmosbackendtemplate"))
                 .paths(PathSelectors.any())
                 .build()
                 .securitySchemes(List.of(securityScheme()))
@@ -72,7 +72,7 @@ public class SwaggerConfig {
     }
 
     private List<GrantType> grantTypes() {
-        GrantType grantType = new ClientCredentialsGrant(authURL + "/realms/" + realm + "/protocol/openid-connect/token");
+        GrantType grantType = new ClientCredentialsGrant(authURL + "realms/" + realm + "/protocol/openid-connect/token");
         return List.of(grantType);
     }
 
