@@ -20,13 +20,13 @@ public class HeroController
     private HeroService heroService;
 
     @GetMapping("")
-    @RolesAllowed({"dmos_user", "view-profile"})
+    @RolesAllowed({"dmos_read"})
     public List<HeroDTO> getAllHeroes() {
         return heroService.getAllHeroes();
     }
 
     @GetMapping("/{heroId}")
-    //@RolesAllowed("heroes-admin")
+    @RolesAllowed("dmos_write")
     public HeroDTO getHero(@PathVariable("heroId") Long heroId)
     {
         return heroService.getHero(heroId, null);
