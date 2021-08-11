@@ -2,6 +2,7 @@ databaseChangeLog:
 - changeSet:
     id: 20210802-1244
     author: mtilden
+    label: initial, 20210802-1244
     preConditions:
       onFail: MARK_RAN
       not:
@@ -16,7 +17,7 @@ databaseChangeLog:
                   primaryKeyName: pk_heroes
                 name: hero_id
                 remarks: Hero ID
-                type: int8
+                type: SERIAL
             - column:
                 constraints:
                   nullable: false

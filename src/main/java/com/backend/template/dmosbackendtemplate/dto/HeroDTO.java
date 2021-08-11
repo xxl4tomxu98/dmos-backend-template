@@ -1,23 +1,25 @@
 package com.backend.template.dmosbackendtemplate.dto;
 
 import com.backend.template.dmosbackendtemplate.domain.Hero;
-import lombok.AllArgsConstructor;
+import io.swagger.annotations.ApiModel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import javax.validation.constraints.NotNull;
+import lombok.ToString;
+import org.springframework.beans.BeanUtils;
 
 @Getter
 @Setter
-@AllArgsConstructor
+@ToString
+@NoArgsConstructor
+@ApiModel(value = "Hero", description = "Hero")
 public class HeroDTO
 {
-    private long heroId;
+    private Integer heroId;
     private String heroName;
 
-    public HeroDTO(@NotNull Hero hero)
+    public HeroDTO(Hero hero)
     {
-        this.heroId = hero.getHeroId();
-        this.heroName = hero.getHeroName();
+        BeanUtils.copyProperties(hero, this);
     }
 }

@@ -8,9 +8,9 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface HeroRepository extends JpaRepository<Hero, Long>, PagingAndSortingRepository<Hero, Long>
+public interface HeroRepository extends JpaRepository<Hero, Integer>, PagingAndSortingRepository<Hero, Integer>
 {
-    Optional<Hero> findOneByHeroId(Long heroId);
+    Optional<Hero> findOneByHeroId(Integer heroId);
 
     Optional<Hero> findOneByHeroNameIgnoringCase(String heroName);
 }
