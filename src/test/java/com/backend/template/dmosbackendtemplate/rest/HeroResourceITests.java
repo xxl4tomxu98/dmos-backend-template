@@ -1,4 +1,4 @@
-package com.backend.template.dmosbackendtemplate.controller;
+package com.backend.template.dmosbackendtemplate.rest;
 
 import com.backend.template.dmosbackendtemplate.DmosBackendTemplateApplicationTests;
 import com.backend.template.dmosbackendtemplate.dto.HeroDTO;
@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HeroControllerITests extends DmosBackendTemplateApplicationTests {
+public class HeroResourceITests extends DmosBackendTemplateApplicationTests {
     private final List<Long> createdHeroes = new ArrayList<>();
     private HeroDTO heroPrimary;
 
