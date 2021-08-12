@@ -18,7 +18,6 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
-import software.amazon.awssdk.auth.credentials.ProfileCredentialsProvider;
 import software.amazon.awssdk.core.SdkBytes;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.sagemakerruntime.SageMakerRuntimeClient;
@@ -50,8 +49,7 @@ public class HeroController {
         // Set Variables
         String endpointName = "pytorch-inference-2021-08-10-19-25-44-438";
         String contentType = "text/csv";
-        String awsCredentialsProfileName = "default";
-
+     
         // Read payload into a variable
         SdkBytes body = SdkBytes.fromUtf8String("The simplest pleasures in life are the best, and this film is one of them. Combining a rather basic storyline of love and adventure this movie transcends the usual weekend fair with wit and unmitigated charm.");
 
@@ -59,13 +57,10 @@ public class HeroController {
         InvokeEndpointRequest request = InvokeEndpointRequest.builder().contentType(contentType).body(body)
                 .endpointName(endpointName).build();
 
-        // Load credentails into a profile
-        ProfileCredentialsProvider profile = ProfileCredentialsProvider.builder().profileName(awsCredentialsProfileName)
-                .build();
-
         // Build AmazonSageMakerRuntime client
-        SageMakerRuntimeClient runtime = SageMakerRuntimeClient.builder().credentialsProvider(profile)
-                .region(Region.US_EAST_1).build();
+        // Uses the default credential provider chain which "should" pull the token from the pod. This also allow
+        // the use of the credential file. See https://docs.aws.amazon.com/sdk-for-java/latest/developer-guide/credentials.html
+        SageMakerRuntimeClient runtime = SageMakerRuntimeClient.builder().region(Region.US_EAST_1).build();
 
         // Perform an inference
         InvokeEndpointResponse result = runtime.invokeEndpoint(request);
