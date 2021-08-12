@@ -18,9 +18,16 @@ spec:
       ports:
         - containerPort: 8080
       env:
-      # Default profile for container
-      - name: spring_profiles_active
-        value: test
+      # Default profile for springboot
+      - name: SPRING_PROFILES_ACTIVE      
+        value: dev
+      # Override the datasource for me
+      - name: SPRING_DATASOURCE_URL
+        value: jdbc:postgresql://app-postgresql.datastore:5432/dmos_dev?currentSchema=dmos_rbergstrom
+      - name: SPRING_DATASOURCE_USERNAME
+        value: dmos_backend
+      - name: SPRING_DATASOURCE_PASSWORD
+        value: m!3zy6BHxRs5#%fW
       volumeMounts:
         - mountPath: /home/maven/repo
           name: workspace
