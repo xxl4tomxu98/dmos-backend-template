@@ -9,8 +9,7 @@ pipeline {
         stage('Build') {
             steps {
                 container('maven') {
-                    sh 'echo Job Name: $JOB_NAME'
-                    sh 'mvn -B install'
+                    sh 'mvn -q -B install'
                 }
             }   
         }
@@ -78,10 +77,20 @@ pipeline {
                 }
            }    
         }
+        stage('Functional Tests') {
+            when { branch 'main' }
+            steps {
+                container('auto-test') {
+                    sh '''#!/bin/bash
+                        java -jar /app/app.jar /app/${DMOS_TEST_SUITE}
+                    '''
+                }
+           }    
+        }
         stage('Scan') {
             steps {
                 container('maven') {
-                    sh 'mvn -B -s `pwd`/settings.xml sonar:sonar -Dsonar.login=${SONAR_LOGIN}'
+                    sh 'mvn -q -B -s `pwd`/settings.xml sonar:sonar -Dsonar.login=${SONAR_LOGIN}'
                 }
            }    
         }

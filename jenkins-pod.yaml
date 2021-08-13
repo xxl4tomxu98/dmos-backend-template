@@ -29,7 +29,7 @@ spec:
           mountPath: /kaniko/.docker
     - name: sonarqube
       image: sonarsource/sonar-scanner-cli
-      imagePullPolicy: Always
+      imagePullPolicy: IfNotPresent
       env:
         - name: SONAR_HOST_URL
           value: "https://sonarqube.ftc-llc.net"
@@ -79,6 +79,21 @@ spec:
         - mountPath: /root/.git-credentials
           name: github
           subPath: .git-credentials
+    - name: auto-test
+      image: docker.ftc-llc.net/dmos/dmos-test:current
+      imagePullPolicy: Always
+      env:
+        - name: DMOS_TEST_DATASETS
+          value: /app/datasets/local/
+        - name: DMOS_TEST_SUITE
+          value: DemoTestSuite.xml
+      volumeMounts:
+        - mountPath: /datasets
+          name: test-datasets
+      command:
+        - sleep
+      args:
+        - infinity
   volumes:
     - name: jenkins-docker-cfg
       secret:
@@ -92,6 +107,8 @@ spec:
       emptyDir: {}
     - name: env-prod
       emptyDir: {}      
+    - name: test-datasets
+      emptyDir: {} 
     - name: github
       secret:
         secretName: github
