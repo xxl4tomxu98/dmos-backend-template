@@ -77,16 +77,16 @@ pipeline {
                 }
            }    
         }
-        stage('Functional Tests') {
-            when { branch 'main' }
-            steps {
-                container('auto-test') {
-                    sh '''#!/bin/bash
-                        java -jar /app/app.jar /app/${DMOS_TEST_SUITE}
-                    '''
-                }
-           }    
-        }
+        // stage('Functional Tests') {
+        //     when { branch 'main' }
+        //     steps {
+        //         container('auto-test') {
+        //             sh '''#!/bin/bash
+        //                 java -jar /app/app.jar /app/${DMOS_TEST_SUITE}
+        //             '''
+        //         }
+        //    }    
+        // }
         stage('Scan') {
             steps {
                 container('maven') {
@@ -106,16 +106,6 @@ pipeline {
                     '''
                 }
            }    
-        }
-        stage('Functionl Tests') {
-            when { branch 'main' }
-            steps {
-                container('maven') {
-                    sh '''#!/bin/bash
-                        echo "Put functional tests here!"
-                    '''
-                }
-            }   
         }
         stage('Prod Deploy') {
             when { branch 'main' }
